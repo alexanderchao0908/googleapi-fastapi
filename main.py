@@ -9,7 +9,7 @@ from gspread.utils import CELL_ADDR_RE
 
 MAGIC_NUMBER = 64
 
-cred_dir = Path("venv/Lib/site-packages/gspread/")
+cred_dir = Path("/etc/secrets/")
 cred_file = cred_dir / "service_account.json"
 gc = gspread.service_account(filename=str(cred_file))
 
