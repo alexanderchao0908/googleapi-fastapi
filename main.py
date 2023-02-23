@@ -163,15 +163,17 @@ def process_pos(copy_start: Union[str, None], copy_end: Union[str, None],
 
 
 def rowcol_count(wks):
-    max_cols = 0
-    for non_empty_row_num in range(1, wks.row_count):  # step through non-empty rows
-        cols_in_row = len(wks.row_values(non_empty_row_num))  # number of cols in this non-empty row
-        if cols_in_row > max_cols:
-            max_cols = cols_in_row
-        if cols_in_row == 0:  # only process if not empty
-            break  # stop getting new rows at first empty row
-    max_rows = len(wks.get_all_values())  # just the non-empty row count
-
+    # max_cols = 0
+    # for non_empty_row_num in range(1, wks.row_count):  # step through non-empty rows
+    #     cols_in_row = len(wks.row_values(non_empty_row_num))  # number of cols in this non-empty row
+    #     if cols_in_row > max_cols:
+    #         max_cols = cols_in_row
+    #     if cols_in_row == 0:  # only process if not empty
+    #         break  # stop getting new rows at first empty row
+    # max_rows = len(wks.get_all_values())  # just the non-empty row count
+    max_cols = len(wks.row_values(1))
+    max_rows = len(wks.col_values(1))
+    
     return max_rows, max_cols
 
 
