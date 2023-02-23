@@ -66,7 +66,7 @@ async def import_data(conn: Connection):
     except Exception as err:
         return {
             "status": 400,
-            "message": err
+            "message": err.args
         }
 
     else:
