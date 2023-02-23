@@ -64,11 +64,10 @@ async def import_data(conn: Connection):
         dest_sheet.update(paste_range, source_data)
 
     except Exception as err:
-        print(err)
-        # return {
-        #     "status": 400,
-        #     "message": err
-        # }
+        return {
+            "status": 400,
+            "message": err
+        }
 
     else:
         return {
@@ -138,7 +137,7 @@ def process_pos(copy_start: Union[str, None], copy_end: Union[str, None],
 
     if start_row_number > end_row_number:
         raise Exception("Start row number should be not be larger than end row number in Source Sheet.")
-    elif ord(start_col_letter) > ord(end_col_letter):
+    elif cmp_str(end_col_letter, start_col_letter) == 1:
         raise Exception("Start column letter should not be after end column letter in Source Sheet.")
 
     if paste_start is None:
@@ -157,7 +156,7 @@ def process_pos(copy_start: Union[str, None], copy_end: Union[str, None],
 
         if start_row_number > end_row_number:
             raise Exception("Start row number should not be larger than end row number in destination Sheet.")
-        elif ord(start_col_letter) > ord(end_col_letter):
+        elif cmp_str(end_col_letter, start_col_letter) == 1:
             raise Exception("Start column letter should not be after end column letter in destination Sheet.")
 
     return copy_start, copy_end, paste_start, paste_end
@@ -234,3 +233,20 @@ def a1_to_rowcol(label: str):
         raise IncorrectCellLabel(label)
 
     return row, col
+
+
+def cmp_str(a: str, b: str):
+    res = 1
+    if len(a) < len(b):
+        res = 1
+    if len(a) > len(b):
+        res = -1
+    if len(a) == len(b):
+        if a < b:
+            res = 1
+        elif a > b:
+            res = -1
+        else:
+            res = 0
+
+    return res
